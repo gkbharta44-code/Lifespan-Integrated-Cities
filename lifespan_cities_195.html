@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lifespan-Integrated Cities — 195-Country Industry Alignment</title>
+<style>
+  :root {
+    --navy: #1f4e78;
+    --navy-dark: #163a59;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --border: #dde3ea;
+    --text: #24313d;
+    --muted: #62727f;
+    --accent: #c98a3a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: #fff;
+    padding: 40px 24px 32px;
+  }
+  header .wrap { max-width: 1200px; margin: 0 auto; }
+  header h1 { margin: 0 0 6px; font-size: 1.9rem; font-weight: 700; }
+  header p.sub { margin: 0; color: #d7e2ee; font-size: 0.98rem; max-width: 820px; line-height: 1.5; }
+  .container { max-width: 1200px; margin: -20px auto 60px; padding: 0 24px; }
+  .notice {
+    background: #fff8ec;
+    border: 1px solid #eddcb2;
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 18px;
+    font-size: 0.88rem;
+    color: #6b5427;
+    margin-bottom: 24px;
+    line-height: 1.55;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(20,30,40,0.06);
+    padding: 20px;
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  .controls input[type="text"] {
+    flex: 1 1 240px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  .controls select {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    background: #fff;
+  }
+  .count {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+  thead th {
+    background: var(--navy);
+    color: #fff;
+    text-align: left;
+    padding: 10px 12px;
+    position: sticky;
+    top: 0;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+  }
+  thead th:hover { background: var(--navy-dark); }
+  thead th.sorted::after { content: " \25BE"; font-size: 0.7em; }
+  tbody td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:nth-child(even) { background: #f7f9fb; }
+  tbody tr:hover { background: #eaf1f8; }
+  td.num { color: var(--muted); width: 36px; }
+  td.country { font-weight: 600; white-space: nowrap; }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #e7eef6;
+    color: var(--navy-dark);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .table-scroll {
+    max-height: 70vh;
+    overflow: auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  footer {
+    max-width: 1200px;
+    margin: 24px auto 0;
+    padding: 0 24px;
+    color: var(--muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+  @media (max-width: 640px) {
+    header h1 { font-size: 1.4rem; }
+    .controls { flex-direction: column; align-items: stretch; }
+    .count { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Lifespan-Integrated Cities</h1>
+    <p class="sub">195-Country Industry Alignment &mdash; each country matched to a recommended city model type, its real primary anchor industry, and supporting sectors, to inform lifespan-integrated planning (housing across 0&ndash;75+ years, multi-generational living, and economic activity matched to local income sources).</p>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="notice">
+    <strong>Independent alignment exercise.</strong> This table links the Lifespan-Integrated Cities framework to each country's own real, publicly known economic base (agriculture, manufacturing, resource extraction, services, tourism, etc.). It does not reference or rely on any external financing structure, sovereign guarantee, yield assumption, or construction-cost figure. No claim is made about government agreement, guarantee capacity, or project size &mdash; it addresses industry alignment only, for planning and educational use.
+  </div>
+
+  <div class="card">
+    <div class="controls">
+      <input type="text" id="searchBox" placeholder="Search country, region, industry...">
+      <select id="regionFilter"><option value="">All Regions</option></select>
+      <select id="modelFilter"><option value="">All City Model Types</option></select>
+      <span class="count" id="rowCount"></span>
+    </div>
+    <div class="table-scroll">
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th data-key="0" style="width:36px;">#</th>
+            <th data-key="1">Country</th>
+            <th data-key="2">Region</th>
+            <th data-key="3">Recommended City Model Type</th>
+            <th data-key="4">Primary Anchor Industry</th>
+            <th data-key="5">Supporting / Secondary Industries</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Recommended city model types are general characterizations of each country's known economic profile, intended as a planning starting point rather than a substitute for country-specific feasibility studies or labor-market analysis.
+</footer>
+
+<script>
+const DATA = [["United States", "North America", "Knowledge Economy / Advanced Manufacturing", "Technology & advanced manufacturing", "Finance, healthcare, aerospace"], ["China", "East Asia", "Industrial / Manufacturing", "Advanced & electronics manufacturing", "Renewable energy, logistics & trade"], ["Germany", "Europe", "Industrial / Manufacturing", "Automotive & precision engineering", "Renewable energy, industrial machinery"], ["Japan", "East Asia", "Industrial / Manufacturing", "Electronics & automotive manufacturing", "Robotics, eldercare & healthcare services"], ["United Kingdom", "Europe", "Knowledge Economy / Financial Services", "Financial services", "Creative industries, pharmaceuticals"], ["India", "South Asia", "Knowledge Economy / Manufacturing", "IT services & software", "Textiles, pharmaceuticals, agriculture"], ["France", "Europe", "Industrial / Agricultural", "Aerospace & luxury manufacturing", "Agriculture & agritourism, tourism"], ["Italy", "Europe", "Industrial / Tourism", "Fashion & precision manufacturing", "Agritourism, tourism"], ["Russia", "Europe/Asia", "Resource / Energy", "Oil, gas & mining", "Agriculture, defense manufacturing"], ["Brazil", "South America", "Agricultural / Resource", "Agribusiness", "Mining, manufacturing, energy"], ["Canada", "North America", "Resource / Energy", "Mining & energy", "Agriculture, technology"], ["Australia", "Oceania", "Resource / Agricultural", "Mining & agriculture", "Tourism, technology"], ["Mexico", "North America", "Industrial / Manufacturing", "Automotive & electronics manufacturing", "Tourism, agriculture, oil"], ["Spain", "Europe", "Tourism / Agricultural", "Tourism", "Agriculture, renewable energy, manufacturing"], ["South Korea", "East Asia", "Industrial / Manufacturing", "Electronics & automotive manufacturing", "Shipbuilding, technology"], ["Turkey", "Europe/Asia", "Industrial / Tourism", "Textile & automotive manufacturing", "Tourism, agriculture"], ["Indonesia", "Southeast Asia", "Resource / Agricultural", "Mining & agriculture", "Manufacturing, tourism"], ["Netherlands", "Europe", "Trade & Logistics / Agricultural", "Logistics & trade (port)", "Agritech, finance"], ["Saudi Arabia", "Middle East", "Resource / Energy", "Oil & gas", "Petrochemicals, tourism (diversification)"], ["Switzerland", "Europe", "Financial Services / Industrial", "Financial services & pharmaceuticals", "Precision manufacturing"], ["Poland", "Europe", "Industrial / Agricultural", "Manufacturing", "Agriculture, IT services"], ["Taiwan", "East Asia", "Industrial / Manufacturing", "Semiconductor & electronics manufacturing", "Technology"], ["Ireland", "Europe", "Knowledge Economy", "Technology & pharmaceuticals", "Financial services"], ["Belgium", "Europe", "Trade & Logistics / Industrial", "Logistics & chemicals", "Manufacturing"], ["Sweden", "Europe", "Industrial / Knowledge Economy", "Automotive & telecom manufacturing", "Renewable energy, technology"], ["Israel", "Middle East", "Knowledge Economy", "Technology & software", "Defense, agritech"], ["Argentina", "South America", "Agricultural / Resource", "Agribusiness (grain & beef)", "Mining, energy"], ["Singapore", "Southeast Asia", "Trade & Logistics / Financial Services", "Financial services & logistics", "Technology"], ["Austria", "Europe", "Industrial / Tourism", "Manufacturing", "Tourism, agriculture"], ["United Arab Emirates", "Middle East", "Resource / Trade & Logistics", "Oil & gas, logistics & trade", "Tourism, finance"], ["Norway", "Europe", "Resource / Energy", "Oil, gas & fisheries", "Renewable energy"], ["Thailand", "Southeast Asia", "Industrial / Tourism", "Automotive & electronics manufacturing", "Tourism, agriculture"], ["Colombia", "South America", "Agricultural / Resource", "Agriculture (coffee) & mining", "Energy"], ["Vietnam", "Southeast Asia", "Industrial / Manufacturing", "Electronics & textile manufacturing", "Agriculture"], ["Malaysia", "Southeast Asia", "Industrial / Agricultural", "Electronics manufacturing & palm oil", "Tourism"], ["Philippines", "Southeast Asia", "Knowledge Economy / Agricultural", "Business process outsourcing (BPO)", "Agriculture, manufacturing"], ["Bangladesh", "South Asia", "Industrial / Agricultural", "Textile & apparel manufacturing", "Agriculture"], ["Denmark", "Europe", "Resource / Agricultural", "Renewable energy & agriculture", "Pharmaceuticals, healthcare"], ["Romania", "Europe", "Industrial / Knowledge Economy", "Manufacturing & IT services", "Agriculture"], ["South Africa", "Africa", "Resource / Industrial", "Mining & manufacturing", "Agriculture, tourism"], ["Pakistan", "South Asia", "Industrial / Agricultural", "Textiles & agriculture", "Manufacturing"], ["Czech Republic", "Europe", "Industrial / Knowledge Economy", "Automotive manufacturing", "Technology"], ["Egypt", "Africa/Middle East", "Trade & Logistics / Tourism", "Tourism & agriculture", "Logistics (Suez Canal), energy"], ["Chile", "South America", "Resource / Agricultural", "Mining (copper) & agriculture", "Fisheries"], ["Peru", "South America", "Resource / Agricultural", "Mining & agriculture", "Fisheries, tourism"], ["Portugal", "Europe", "Tourism / Agricultural", "Tourism", "Agriculture, manufacturing"], ["Nigeria", "Africa", "Resource / Agricultural", "Oil & gas & agriculture", "Manufacturing"], ["Kazakhstan", "Central Asia", "Resource / Energy", "Oil, gas & mining", "Agriculture"], ["Finland", "Europe", "Knowledge Economy / Industrial", "Technology & forestry manufacturing", "Renewable energy"], ["Algeria", "Africa", "Resource / Energy", "Oil & gas", "Agriculture"], ["Greece", "Europe", "Tourism / Trade & Logistics", "Tourism & maritime shipping", "Agriculture"], ["Iran", "Middle East", "Resource / Agricultural", "Oil, gas & agriculture", "Manufacturing"], ["New Zealand", "Oceania", "Agricultural / Tourism", "Agriculture (dairy) & agritourism", "Tourism"], ["Hungary", "Europe", "Industrial / Agricultural", "Automotive manufacturing", "Agriculture"], ["Iraq", "Middle East", "Resource / Agricultural", "Oil & gas", "Agriculture"], ["Ukraine", "Europe", "Agricultural / Industrial", "Agriculture (grain)", "Manufacturing, mining"], ["Qatar", "Middle East", "Resource / Financial Services", "Oil & gas (LNG)", "Finance, tourism"], ["Morocco", "Africa", "Agricultural / Industrial", "Agriculture & phosphate/auto manufacturing", "Tourism"], ["Uzbekistan", "Central Asia", "Agricultural / Resource", "Agriculture (cotton) & mining", "Manufacturing"], ["Kuwait", "Middle East", "Resource / Financial Services", "Oil & gas", "Finance"], ["Slovakia", "Europe", "Industrial / Knowledge Economy", "Automotive manufacturing", "Technology"], ["Angola", "Africa", "Resource / Agricultural", "Oil & gas & mining", "Agriculture"], ["Bulgaria", "Europe", "Industrial / Agricultural", "Manufacturing", "Agriculture, IT services"], ["Kenya", "Africa", "Agricultural / Knowledge Economy", "Agriculture & technology", "Tourism"], ["Ecuador", "South America", "Agricultural / Resource", "Agriculture & oil", "Fisheries"], ["Dominican Republic", "Caribbean", "Tourism / Agricultural", "Tourism", "Agriculture, manufacturing"], ["Guatemala", "Central America", "Agricultural / Industrial", "Agriculture & textile manufacturing", "Tourism"], ["DR Congo", "Africa", "Resource", "Mining (cobalt & minerals)", "Agriculture"], ["Ethiopia", "Africa", "Agricultural / Industrial", "Agriculture & textile manufacturing", "Tourism"], ["Ghana", "Africa", "Resource / Agricultural", "Mining (gold) & agriculture (cocoa)", "Oil"], ["Oman", "Middle East", "Resource / Trade & Logistics", "Oil & gas, logistics", "Tourism"], ["Croatia", "Europe", "Tourism / Trade & Logistics", "Tourism & maritime shipping", "Agriculture"], ["Ivory Coast", "Africa", "Agricultural / Resource", "Agriculture (cocoa & coffee)", "Mining"], ["Serbia", "Europe", "Industrial / Knowledge Economy", "Manufacturing & IT services", "Agriculture"], ["Venezuela", "South America", "Resource", "Oil & gas", "Mining"], ["Luxembourg", "Europe", "Financial Services", "Financial services", "Logistics"], ["Costa Rica", "Central America", "Tourism / Knowledge Economy", "Ecotourism & agriculture", "Medical device manufacturing"], ["Cuba", "Caribbean", "Tourism / Agricultural", "Tourism & agriculture", "Healthcare / medical services export"], ["Lithuania", "Europe", "Industrial / Knowledge Economy", "Manufacturing & IT services", "Agriculture"], ["Belarus", "Europe", "Industrial / Agricultural", "Manufacturing & agriculture", "IT services"], ["Sri Lanka", "South Asia", "Industrial / Agricultural", "Textiles & tea agriculture", "Tourism"], ["Uruguay", "South America", "Agricultural", "Agribusiness (beef & grain)", "Tourism"], ["Panama", "Central America", "Trade & Logistics / Financial Services", "Logistics & trade (Canal)", "Finance, tourism"], ["Tanzania", "Africa", "Agricultural / Resource", "Agriculture & mining", "Tourism"], ["Slovenia", "Europe", "Industrial / Tourism", "Manufacturing", "Tourism"], ["Myanmar", "Southeast Asia", "Agricultural / Industrial", "Agriculture & textiles", "Mining"], ["Turkmenistan", "Central Asia", "Resource / Agricultural", "Oil & gas", "Agriculture (cotton)"], ["Bolivia", "South America", "Resource / Agricultural", "Mining (lithium) & agriculture", "Energy"], ["Azerbaijan", "Caucasus", "Resource", "Oil & gas", "Agriculture"], ["Uganda", "Africa", "Agricultural / Resource", "Agriculture", "Mining (oil emerging), tourism"], ["Cameroon", "Africa", "Agricultural / Resource", "Agriculture & oil", "Mining"], ["Jordan", "Middle East", "Tourism / Industrial", "Tourism & textile manufacturing", "Agriculture"], ["Tunisia", "Africa", "Industrial / Tourism", "Textile manufacturing & tourism", "Agriculture"], ["Paraguay", "South America", "Agricultural / Resource", "Agriculture (soy & beef) & hydropower", "Manufacturing"], ["Zimbabwe", "Africa", "Agricultural / Resource", "Agriculture & mining", "Tourism"], ["Latvia", "Europe", "Industrial / Trade & Logistics", "Manufacturing & logistics", "IT services"], ["Libya", "Africa", "Resource", "Oil & gas", "Agriculture"], ["Cambodia", "Southeast Asia", "Industrial / Agricultural", "Textile manufacturing & agriculture", "Tourism"], ["Estonia", "Europe", "Knowledge Economy", "Technology (digital economy)", "Manufacturing"], ["Bahrain", "Middle East", "Financial Services / Resource", "Financial services & oil", "Tourism"], ["Nepal", "South Asia", "Agricultural / Tourism", "Agriculture & tourism", "Hydropower"], ["Cyprus", "Europe", "Tourism / Financial Services", "Tourism & financial services", "Shipping"], ["Sudan", "Africa", "Agricultural / Resource", "Agriculture & oil", "Mining"], ["Iceland", "Europe", "Resource / Trade", "Fisheries & geothermal energy", "Tourism"], ["Georgia", "Caucasus", "Agricultural / Tourism", "Agriculture (wine) & tourism", "Logistics & trade"], ["Honduras", "Central America", "Agricultural / Industrial", "Agriculture & textile manufacturing", "Tourism"], ["Zambia", "Africa", "Resource / Agricultural", "Mining (copper) & agriculture", "Tourism"], ["Senegal", "Africa", "Agricultural / Resource", "Agriculture & fisheries", "Mining"], ["El Salvador", "Central America", "Industrial / Agricultural", "Textile manufacturing & agriculture", "Tourism"], ["Haiti", "Caribbean", "Agricultural / Industrial", "Agriculture & textile manufacturing", "Tourism"], ["Bosnia and Herzegovina", "Europe", "Industrial / Agricultural", "Manufacturing & agriculture", "Tourism"], ["Lebanon", "Middle East", "Financial Services / Tourism", "Financial services & tourism", "Agriculture"], ["Papua New Guinea", "Oceania", "Resource / Agricultural", "Mining & agriculture", "Fisheries"], ["Guyana", "South America", "Resource / Agricultural", "Oil & gas (emerging) & agriculture", "Mining"], ["Mali", "Africa", "Agricultural / Resource", "Agriculture & mining (gold)", "\u2014"], ["Albania", "Europe", "Tourism / Agricultural", "Tourism & agriculture", "Manufacturing"], ["Burkina Faso", "Africa", "Agricultural / Resource", "Agriculture & mining (gold)", "\u2014"], ["Armenia", "Caucasus", "Agricultural / Knowledge Economy", "Agriculture & IT services", "Mining"], ["Malta", "Europe", "Financial Services / Tourism", "Financial services & tourism", "Technology"], ["Guinea", "Africa", "Resource / Agricultural", "Mining (bauxite) & agriculture", "\u2014"], ["Mongolia", "Central Asia", "Resource / Agricultural", "Mining & livestock agriculture", "\u2014"], ["Benin", "Africa", "Agricultural / Trade & Logistics", "Agriculture (cotton) & trade", "\u2014"], ["Trinidad and Tobago", "Caribbean", "Resource", "Oil & gas (LNG)", "Tourism"], ["Chad", "Africa", "Resource / Agricultural", "Oil & gas & agriculture", "\u2014"], ["Niger", "Africa", "Agricultural / Resource", "Agriculture & mining (uranium)", "\u2014"], ["Nicaragua", "Central America", "Agricultural / Industrial", "Agriculture & textile manufacturing", "Tourism"], ["Kyrgyzstan", "Central Asia", "Agricultural / Resource", "Agriculture & mining (gold)", "\u2014"], ["Gabon", "Africa", "Resource / Agricultural", "Oil & gas & forestry", "Mining"], ["Mozambique", "Africa", "Agricultural / Resource", "Agriculture & mining (coal/gas emerging)", "\u2014"], ["Jamaica", "Caribbean", "Tourism / Resource", "Tourism & mining (bauxite)", "Agriculture"], ["Botswana", "Africa", "Resource / Tourism", "Mining (diamonds)", "Tourism"], ["Moldova", "Europe", "Agricultural / Industrial", "Agriculture (wine) & manufacturing", "\u2014"], ["North Macedonia", "Europe", "Industrial / Agricultural", "Manufacturing & agriculture", "\u2014"], ["Madagascar", "Africa", "Agricultural / Resource", "Agriculture & mining", "Tourism"], ["Tajikistan", "Central Asia", "Agricultural / Resource", "Agriculture & mining", "\u2014"], ["Afghanistan", "Central Asia", "Agricultural / Resource", "Agriculture & mining", "\u2014"], ["Laos", "Southeast Asia", "Resource / Agricultural", "Hydropower & agriculture", "Mining"], ["Malawi", "Africa", "Agricultural", "Agriculture (tobacco)", "\u2014"], ["Rwanda", "Africa", "Agricultural / Knowledge Economy", "Agriculture & technology (emerging)", "Tourism"], ["Namibia", "Africa", "Resource / Agricultural", "Mining (uranium/diamonds) & fisheries", "Tourism"], ["North Korea", "East Asia", "Industrial / Resource", "Manufacturing & mining (state-controlled)", "Agriculture"], ["Mauritius", "Africa", "Tourism / Financial Services", "Tourism & financial services", "Textiles"], ["Bahamas", "Caribbean", "Tourism / Financial Services", "Tourism & financial services", "\u2014"], ["Congo", "Africa", "Resource / Agricultural", "Oil & gas & forestry", "Mining"], ["Brunei", "Southeast Asia", "Resource", "Oil & gas", "\u2014"], ["Palestine", "Middle East", "Agricultural / Industrial", "Agriculture & manufacturing", "\u2014"], ["Mauritania", "Africa", "Resource / Agricultural", "Mining (iron ore) & fisheries", "Agriculture"], ["Somalia", "Africa", "Agricultural", "Agriculture (livestock) & fisheries", "\u2014"], ["Equatorial Guinea", "Africa", "Resource", "Oil & gas", "\u2014"], ["Togo", "Africa", "Agricultural / Trade & Logistics", "Agriculture & trade (port)", "Mining"], ["Syria", "Middle East", "Agricultural / Resource", "Agriculture & oil", "\u2014"], ["Monaco", "Europe", "Financial Services / Tourism", "Financial services & tourism", "\u2014"], ["Montenegro", "Europe", "Tourism / Agricultural", "Tourism & agriculture", "\u2014"], ["Liechtenstein", "Europe", "Financial Services / Industrial", "Financial services & manufacturing", "\u2014"], ["Barbados", "Caribbean", "Tourism / Financial Services", "Tourism & financial services", "Agriculture"], ["Sierra Leone", "Africa", "Resource / Agricultural", "Mining (diamonds) & agriculture", "\u2014"], ["Burundi", "Africa", "Agricultural", "Agriculture (coffee)", "\u2014"], ["Maldives", "South Asia", "Tourism / Resource", "Tourism & fisheries", "\u2014"], ["Yemen", "Middle East", "Agricultural / Resource", "Agriculture & oil", "Fisheries"], ["Fiji", "Oceania", "Tourism / Agricultural", "Tourism & agriculture (sugar)", "Fisheries"], ["South Sudan", "Africa", "Resource / Agricultural", "Oil & gas & agriculture", "\u2014"], ["Suriname", "South America", "Resource / Agricultural", "Mining (bauxite/oil) & agriculture", "\u2014"], ["Eswatini", "Africa", "Agricultural / Industrial", "Agriculture (sugar) & textile manufacturing", "\u2014"], ["Liberia", "Africa", "Resource / Agricultural", "Mining (iron ore) & agriculture (rubber)", "\u2014"], ["Andorra", "Europe", "Tourism / Financial Services", "Tourism & financial services", "\u2014"], ["Djibouti", "Africa", "Trade & Logistics", "Logistics & trade (port)", "\u2014"], ["Bhutan", "South Asia", "Resource / Tourism", "Hydropower & tourism", "Agriculture"], ["Central African Republic", "Africa", "Resource / Agricultural", "Mining (diamonds) & agriculture", "\u2014"], ["Belize", "Central America", "Tourism / Agricultural", "Tourism & agriculture", "\u2014"], ["Cape Verde", "Africa", "Tourism / Resource", "Tourism & fisheries", "\u2014"], ["Guinea-Bissau", "Africa", "Agricultural / Resource", "Agriculture (cashews) & fisheries", "\u2014"], ["Lesotho", "Africa", "Industrial / Agricultural", "Textile manufacturing & agriculture", "Mining (diamonds)"], ["Gambia", "Africa", "Agricultural / Tourism", "Agriculture & tourism", "Fisheries"], ["Saint Lucia", "Caribbean", "Tourism / Agricultural", "Tourism & agriculture", "\u2014"], ["San Marino", "Europe", "Financial Services / Tourism", "Financial services & tourism", "\u2014"], ["Antigua and Barbuda", "Caribbean", "Tourism / Financial Services", "Tourism & financial services", "\u2014"], ["Seychelles", "Africa", "Tourism / Resource", "Tourism & fisheries", "\u2014"], ["Timor-Leste", "Southeast Asia", "Resource / Agricultural", "Oil & gas & agriculture", "\u2014"], ["Eritrea", "Africa", "Agricultural / Resource", "Agriculture & mining", "\u2014"], ["Solomon Islands", "Oceania", "Agricultural / Resource", "Agriculture & fisheries", "Forestry"], ["Comoros", "Africa", "Agricultural / Resource", "Agriculture (spices) & fisheries", "\u2014"], ["Grenada", "Caribbean", "Agricultural / Tourism", "Agriculture (spices) & tourism", "\u2014"], ["Vanuatu", "Oceania", "Agricultural / Tourism", "Agriculture & tourism", "Fisheries"], ["Samoa", "Oceania", "Agricultural / Tourism", "Agriculture & tourism", "Fisheries"], ["Saint Vincent and the Grenadines", "Caribbean", "Agricultural / Tourism", "Agriculture & tourism", "Fisheries"], ["Sao Tome and Principe", "Africa", "Agricultural / Resource", "Agriculture (cocoa) & fisheries", "Tourism"], ["Saint Kitts and Nevis", "Caribbean", "Tourism / Financial Services", "Tourism & financial services", "Agriculture"], ["Dominica", "Caribbean", "Agricultural / Tourism", "Agriculture & ecotourism", "\u2014"], ["Tonga", "Oceania", "Agricultural / Resource", "Agriculture & fisheries", "Tourism"], ["Micronesia", "Oceania", "Resource / Agricultural", "Fisheries & agriculture", "Tourism"], ["Kiribati", "Oceania", "Resource", "Fisheries & agriculture", "\u2014"], ["Palau", "Oceania", "Tourism / Resource", "Tourism & fisheries", "\u2014"], ["Marshall Islands", "Oceania", "Resource / Trade & Logistics", "Fisheries & maritime shipping registry", "\u2014"], ["Nauru", "Oceania", "Resource", "Mining (phosphate, legacy) & fisheries", "\u2014"], ["Tuvalu", "Oceania", "Resource", "Fisheries & agriculture", "\u2014"]];
+
+const tbody = document.getElementById('tableBody');
+const searchBox = document.getElementById('searchBox');
+const regionFilter = document.getElementById('regionFilter');
+const modelFilter = document.getElementById('modelFilter');
+const rowCount = document.getElementById('rowCount');
+
+const regions = [...new Set(DATA.map(r => r[1]))].sort();
+const models = [...new Set(DATA.map(r => r[2]))].sort();
+regions.forEach(r => {
+  const o = document.createElement('option');
+  o.value = r; o.textContent = r;
+  regionFilter.appendChild(o);
+});
+models.forEach(m => {
+  const o = document.createElement('option');
+  o.value = m; o.textContent = m;
+  modelFilter.appendChild(o);
+});
+
+let sortKey = null;
+let sortAsc = true;
+
+function render() {
+  const q = searchBox.value.trim().toLowerCase();
+  const region = regionFilter.value;
+  const model = modelFilter.value;
+
+  let rows = DATA.filter(r => {
+    if (region && r[1] !== region) return false;
+    if (model && r[2] !== model) return false;
+    if (q) {
+      const hay = r.join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  if (sortKey !== null) {
+    rows = rows.slice().sort((a, b) => {
+      const av = a[sortKey], bv = b[sortKey];
+      if (typeof av === 'number') return sortAsc ? av - bv : bv - av;
+      return sortAsc ? String(av).localeCompare(String(bv)) : String(bv).localeCompare(String(av));
+    });
+  }
+
+  tbody.innerHTML = '';
+  rows.forEach((r, i) => {
+    const originalIndex = DATA.indexOf(r) + 1;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="num">${originalIndex}</td>
+      <td class="country">${r[0]}</td>
+      <td>${r[1]}</td>
+      <td><span class="badge">${r[2]}</span></td>
+      <td>${r[3]}</td>
+      <td>${r[4]}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  rowCount.textContent = `${rows.length} of ${DATA.length} countries`;
+}
+
+document.querySelectorAll('thead th[data-key]').forEach(th => {
+  th.addEventListener('click', () => {
+    const key = parseInt(th.dataset.key, 10);
+    if (sortKey === key) { sortAsc = !sortAsc; } else { sortKey = key; sortAsc = true; }
+    document.querySelectorAll('thead th').forEach(h => h.classList.remove('sorted'));
+    th.classList.add('sorted');
+    render();
+  });
+});
+
+searchBox.addEventListener('input', render);
+regionFilter.addEventListener('change', render);
+modelFilter.addEventListener('change', render);
+
+render();
+</script>
+
+</body>
+</html>
